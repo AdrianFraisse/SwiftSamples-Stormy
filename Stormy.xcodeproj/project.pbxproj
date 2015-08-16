@@ -26,6 +26,7 @@
 		3A0882B81B7E4FE600033390 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3A0882C01B7E512900033390 /* CurrentWeather.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CurrentWeather.plist; sourceTree = "<group>"; };
 		3A0882C21B7E51AE00033390 /* CurrentWeather.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentWeather.swift; sourceTree = "<group>"; };
+		3A33F19D1B8062AD00A7E397 /* WeatherAPI.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = WeatherAPI.playground; path = Stormy/WeatherAPI.playground; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,6 +43,7 @@
 		3A0882A01B7E4FE500033390 = {
 			isa = PBXGroup;
 			children = (
+				3A33F19D1B8062AD00A7E397 /* WeatherAPI.playground */,
 				3A0882AB1B7E4FE600033390 /* Stormy */,
 				3A0882AA1B7E4FE600033390 /* Products */,
 			);
@@ -292,6 +294,7 @@
 				3A0882BD1B7E4FE600033390 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
