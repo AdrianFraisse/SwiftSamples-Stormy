@@ -27,25 +27,26 @@ class NetworkOperation {
             (let data: NSData?, let response: NSURLResponse?, let error: NSError?) -> Void in
             
             // 1: Check HTTP Response for successful GET request
-            if let httpResponse = response as? NSHTTPURLResponse, receivedData = data {
-                
-                switch (httpResponse.statusCode) {
-                case 200:
-                    // 2: Create JSON object with data
-                    do {
-                        let jsonDictionary = try NSJSONSerialization.JSONObjectWithData(receivedData, options: NSJSONReadingOptions.AllowFragments)
-                            as? [String:AnyObject]
-
-                        // 3: Pass the json back to the completion handler
-                        completion(jsonDictionary)
-                    } catch _ {
-                        print("error parsing json data")
-                    }
-                default:
-                    print("GET request got response \(httpResponse.statusCode)")
-                }
-            } else {
+            guard let httpResponse = response as? NSHTTPURLResponse, receivedData = data
+            else {
                 print("error: not a valid http response")
+                return
+            }
+                
+            switch (httpResponse.statusCode) {
+            case 200:
+                // 2: Create JSON object with data
+                do {
+                    let jsonDictionary = try NSJSONSerialization.JSONObjectWithData(receivedData, options: NSJSONReadingOptions.AllowFragments)
+                        as? [String:AnyObject]
+
+                    // 3: Pass the json back to the completion handler
+                    completion(jsonDictionary)
+                } catch {
+                    print("error parsing json data")
+                }
+            default:
+                print("GET request got response \(httpResponse.statusCode)")
             }
         }
         dataTask.resume()

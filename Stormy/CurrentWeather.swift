@@ -24,7 +24,7 @@ struct CurrentWeather {
         } else {
             humidity = nil
         }
-
+        
         
         if let precipProbabilityFloat = weatherDictionary["precipProbability"] as? Double {
             precipProbability = Int(precipProbabilityFloat * 100)
