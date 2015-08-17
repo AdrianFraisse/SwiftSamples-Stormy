@@ -14,27 +14,34 @@ class ViewController: UIViewController {
     @IBOutlet weak var currentHumidityLabel: UILabel?
     @IBOutlet weak var currentPrecipitationLabel: UILabel!
     
+    let coordinates: (lat: Double, long: Double) = (37.8267, -122.423)
+    
     private let forecastAPIKey = "6104d88ba44f63674aa1f26dfe66f2fa"
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let baseURL = NSURL(string: "https://api.forecast.io/forecast/\(forecastAPIKey)/")
-        let forecastURL = NSURL(string: "37.8267,-122.423", relativeToURL: baseURL)
-        
-        // Use NSURLSession API to fetch Data - Asynchronously
-        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
-        let session = NSURLSession(configuration: configuration)
-        
-        // NSURLRequest object - Default to HTTP Get
-        let request = NSURLRequest(URL: forecastURL!)
-        
-        let dataTask = session.dataTaskWithRequest(request) { (data, response, error) -> Void in
-            print(data!)
-            print("I'm on a background thread")
+
+        let forecastService = ForecastService(APIKey: forecastAPIKey)
+        forecastService.getForecast(coordinates.lat, long: coordinates.long) {
+            (currently) -> Void in
+            if let currentWeather = currently {
+                // Update UI on main thread
+                dispatch_async(dispatch_get_main_queue()) {
+                    // Execute closure on the main thread
+                    if let temperature = currentWeather.temperature {
+                        // Self is always needed in a closure
+                        self.currentTemperatureLabel?.text = "\(temperature)°"
+                    }
+                    if let humidity = currentWeather.humidity {
+                        self.currentHumidityLabel?.text = "\(humidity)%"
+                    }
+                    if let precipitation = currentWeather.precipProbability {
+                        self.currentPrecipitationLabel.text = "\(precipitation)%"
+                    }
+                }
+            }
         }
         
-        dataTask.resume()
-        print("I'm on the main thread")
         
     }
 
